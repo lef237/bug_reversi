@@ -99,7 +99,12 @@ end
 
 def finished?(board)
   # ここを修正する
-  false
+  flatten_board = board.flatten
+  if flatten_board.include?(0) && flatten_board.include?(1) && flatten_board.include?(2)
+    false
+  else
+    true
+  end
 end
 
 def placeable?(board, attack_stone_color)
