@@ -76,11 +76,12 @@ end
 # ２個以上ひっくり返す必要がある
 def turn!(board, target_pos, attack_stone_color, direction)
   # pp target_pos
+  # debugger
   return false if target_pos.out_of_board?
   # return false if target_pos == BLANK_CELL
 
   next_pos = target_pos.next_position(direction)
-  next_stone = pos_stone_color(board, next_pos.row, next_pos.col)
+  next_stone = pos_stone_color(board, next_pos.col, next_pos.row)
 
   if (next_stone == attack_stone_color) || turn!(board, next_pos, attack_stone_color, direction)
     board[target_pos.col][target_pos.row] = attack_stone_color

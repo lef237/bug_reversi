@@ -40,6 +40,7 @@ class TestReversi < Minitest::Test
     pp board
     assert_equal put_stone!(board, 'f5', WHITE_STONE), true
     pp board
+    # ひっくり返ってはいけないところがひっくり返っている
     assert_equal build_board('pattern00_step2.txt'), board
   end
 
