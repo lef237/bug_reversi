@@ -2,7 +2,6 @@
 
 require 'minitest/autorun'
 require_relative '../lib/reversi_methods'
-require 'debug'
 
 def build_board(filename)
   target_file = File.join(File.dirname(__FILE__), filename)
@@ -37,36 +36,23 @@ class TestReversi < Minitest::Test
     board = build_board('pattern00.txt')
     assert_equal put_stone!(board, 'e3', BLACK_STONE), true
     assert_equal build_board('pattern00_step1.txt'), board
-    pp board
     assert_equal put_stone!(board, 'f5', WHITE_STONE), true
-    pp board
-    # ひっくり返ってはいけないところがひっくり返っている
     assert_equal build_board('pattern00_step2.txt'), board
   end
 
   def test_cannot_put_stone
     board = build_board('pattern01.txt')
-    # debugger
-    # pp board
-    # 置けないはずのところに置けてしまっている（黒'2'はB8に置けないはずなので、falseを返すようにする）
     assert_equal put_stone!(board, 'b8', BLACK_STONE), false
   end
 
   def test_turn
     board = build_board('pattern02.txt')
-    # pp board
-    # pp ""
-    # debugger
     assert_equal put_stone!(board, 'b5', BLACK_STONE), true
-    # pp board
-    # ひっくり返るべき石がひっくり返っていない
     assert_equal build_board('pattern02_after.txt'), board
   end
 
   def test_finished?
     assert_equal finished?(build_board('pattern00.txt')), false # 初期盤面
-    # debugger
-    # 全部埋まったときにtrueになるようにロジックを書く
     assert_equal finished?(build_board('pattern03a.txt')), true # 全て埋まった
     assert_equal finished?(build_board('pattern03b.txt')), true # 白最短勝利
     assert_equal finished?(build_board('pattern03c.txt')), true # 黒最短勝利

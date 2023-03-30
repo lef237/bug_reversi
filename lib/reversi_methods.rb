@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative './position'
-require 'debug'
 
 WHITE_STONE = 1
 BLACK_STONE = 2
@@ -45,7 +44,7 @@ def copy_board(to_board, from_board)
     end
   end
 end
-# このメソッドを修正する
+
 def put_stone!(board, cellstr, stone_color, execute = true) # rubocop:disable Style/OptionalBooleanParameter
   pos = Position.new(cellstr:)
   raise '無効なポジションです' if pos.invalid?
@@ -57,11 +56,8 @@ def put_stone!(board, cellstr, stone_color, execute = true) # rubocop:disable St
 
   turn_succeed = false
   DIRECTIONS.each do |direction|
-    # debugger
     next_pos = pos.next_position(direction)
-    pp next_pos
     next_pos_color = pos_stone_color(copied_board, next_pos.col, next_pos.row)
-    pp next_pos_color
     next if next_pos_color == stone_color || next_pos_color == BLANK_CELL
 
     turn_succeed = true if turn!(copied_board, next_pos, stone_color, direction)
@@ -73,12 +69,8 @@ def put_stone!(board, cellstr, stone_color, execute = true) # rubocop:disable St
 end
 
 # target_posはひっくり返す対象セル
-# ２個以上ひっくり返す必要がある
 def turn!(board, target_pos, attack_stone_color, direction)
-  # pp target_pos
-  # debugger
   return false if target_pos.out_of_board?
-  # return false if target_pos == BLANK_CELL
 
   next_pos = target_pos.next_position(direction)
   next_stone = pos_stone_color(board, next_pos.col, next_pos.row)
@@ -98,7 +90,6 @@ def pos_stone_color(board, col, row)
 end
 
 def finished?(board)
-  # ここを修正する
   flatten_board = board.flatten
   if flatten_board.include?(0) && flatten_board.include?(1) && flatten_board.include?(2)
     false
